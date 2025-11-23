@@ -45,7 +45,7 @@ export default function IntroPage({ onGetStarted }: IntroPageProps) {
   ]
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary-50 via-[#FAFAFF] to-primary-100 flex flex-col">
+    <div className="min-h-screen bg-gradient-to-br from-primary-50 via-primary-100 to-primary-200 flex flex-col">
       {/* Hero Section */}
       <div className="flex-1 flex items-center justify-center px-4 py-12">
         <div className="max-w-6xl w-full text-center">
@@ -68,7 +68,7 @@ export default function IntroPage({ onGetStarted }: IntroPageProps) {
           {/* CTA Button */}
           <button
             onClick={onGetStarted}
-            className="btn-primary text-lg px-8 py-4 flex items-center space-x-2 mx-auto mb-12 group"
+            className="btn-primary text-lg px-8 py-4 flex items-center space-x-2 mx-auto mb-12 group shadow-lg hover:shadow-xl"
           >
             <span>Get Started</span>
             <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />

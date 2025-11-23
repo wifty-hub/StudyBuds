@@ -44,8 +44,8 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary-50 via-[#FAFAFF] to-primary-100">
-      <header className="bg-[#F1F1F6] shadow-sm border-b border-primary-200">
+    <div className="min-h-screen">
+      <header className="bg-[#F1F1F6] shadow-md border-b-2 border-primary-200 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
@@ -58,10 +58,10 @@ export default function Home() {
             <nav className="flex space-x-1">
               <button
                 onClick={() => setActiveTab('upload')}
-                className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-colors ${
+                className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-all ${
                   activeTab === 'upload'
-                    ? 'bg-primary text-white'
-                    : 'text-neutral-600 hover:bg-primary-50'
+                    ? 'bg-primary text-white shadow-md'
+                    : 'text-neutral-600 hover:bg-primary-50 hover:text-primary'
                 }`}
               >
                 <FileText className="h-5 w-5" />
@@ -69,10 +69,10 @@ export default function Home() {
               </button>
               <button
                 onClick={() => setActiveTab('materials')}
-                className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-colors ${
+                className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-all ${
                   activeTab === 'materials'
-                    ? 'bg-primary text-white'
-                    : 'text-neutral-600 hover:bg-primary-50'
+                    ? 'bg-primary text-white shadow-md'
+                    : 'text-neutral-600 hover:bg-primary-50 hover:text-primary'
                 }`}
               >
                 <BookOpen className="h-5 w-5" />
@@ -80,10 +80,10 @@ export default function Home() {
               </button>
               <button
                 onClick={() => setActiveTab('chat')}
-                className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-colors ${
+                className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-all ${
                   activeTab === 'chat'
-                    ? 'bg-primary text-white'
-                    : 'text-neutral-600 hover:bg-primary-50'
+                    ? 'bg-primary text-white shadow-md'
+                    : 'text-neutral-600 hover:bg-primary-50 hover:text-primary'
                 }`}
               >
                 <MessageSquare className="h-5 w-5" />
@@ -91,10 +91,10 @@ export default function Home() {
               </button>
               <button
                 onClick={() => setActiveTab('plan')}
-                className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-colors ${
+                className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-all ${
                   activeTab === 'plan'
-                    ? 'bg-primary text-white'
-                    : 'text-neutral-600 hover:bg-primary-50'
+                    ? 'bg-primary text-white shadow-md'
+                    : 'text-neutral-600 hover:bg-primary-50 hover:text-primary'
                 }`}
               >
                 <Calendar className="h-5 w-5" />

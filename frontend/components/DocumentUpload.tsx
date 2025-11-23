@@ -82,7 +82,7 @@ export default function DocumentUpload({ onSuccess }: DocumentUploadProps) {
       </div>
 
       {uploadStatus && !uploading && (
-        <div className="mt-4 p-4 bg-red-50 border border-red-200 rounded-lg text-red-700">
+        <div className="mt-4 p-4 bg-accent-50 border-2 border-accent-200 rounded-lg text-neutral-800">
           {uploadStatus}
         </div>
       )}

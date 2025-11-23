@@ -13,15 +13,17 @@
   }
 
   body {
-    background-color: #FAFAFF; /* Cloud White */
-    color: #0F0F19; /* Dark Charcoal for text */
+    background: linear-gradient(135deg, #F5F6FF 0%, #FAFAFF 50%, #E8EAFF 100%);
+    background-attachment: fixed;
+    color: #1A1A1F; /* Dark Charcoal for text */
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+    min-height: 100vh;
   }
 }
 
 @layer components {
   .btn-primary {
-    @apply bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed;
+    @apply bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary-600 shadow-md hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed font-medium;
   }
 
   .btn-secondary {
@@ -29,7 +31,7 @@
   }
 
   .card {
-    @apply bg-[#F1F1F6] rounded-lg shadow-md p-6;
+    @apply bg-[#F1F1F6] rounded-lg shadow-lg p-6 border border-primary-100;
   }
 
   .input-field {
