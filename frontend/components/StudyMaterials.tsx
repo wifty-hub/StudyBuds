@@ -31,24 +31,18 @@ export default function StudyMaterials() {
     try {
       const docs = await getDocuments()
       setDocuments(docs)
-      // Cache documents for offline access
       if (typeof window !== 'undefined') {
         const { cacheDocuments } = await import('@/lib/storage')
         cacheDocuments(docs)
       }
     } catch (error: any) {
       console.error('Failed to load documents:', error)
-      // Try to load from cache if backend fails
       if (typeof window !== 'undefined') {
         const { getCachedDocuments } = await import('@/lib/storage')
         const cached = getCachedDocuments()
         if (cached) {
           setDocuments(cached)
         }
-      }
-      // Don't show error if backend isn't configured - this is expected
-      if (!error?.message?.includes('not configured')) {
-        // Could show a toast notification here if needed
       }
     } finally {
       setLoading(false)
@@ -115,7 +109,7 @@ export default function StudyMaterials() {
   if (loading) {
     return (
       <div className="flex justify-center items-center h-64">
-        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+        <Loader2 className="h-12 w-12 animate-spin text-primary" />
       </div>
     )
   }
@@ -124,39 +118,41 @@ export default function StudyMaterials() {
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
       {/* Documents List */}
       <div className="lg:col-span-1">
-        <div className="card">
-          <h2 className="text-xl font-bold mb-4 text-neutral-900">Your Documents</h2>
+        <div className="card-elevated">
+          <div className="flex items-center space-x-3 mb-6">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-primary-600 flex items-center justify-center shadow-lg">
+              <FileText className="h-5 w-5 text-white" />
+            </div>
+            <h2 className="text-2xl font-bold text-neutral-900">Documents</h2>
+          </div>
           {documents.length === 0 ? (
-            <p className="text-neutral-500 text-center py-8">No documents uploaded yet</p>
+            <div className="text-center py-12">
+              <FileText className="h-12 w-12 text-neutral-300 mx-auto mb-4" />
+              <p className="text-neutral-500">No documents uploaded yet</p>
+            </div>
           ) : (
-            <div className="space-y-2">
+            <div className="space-y-3">
               {documents.map(doc => (
                 <div
                   key={doc.id}
-                  className={`p-4 border rounded-lg cursor-pointer transition-colors ${
+                  className={`p-4 rounded-xl cursor-pointer transition-all duration-200 ${
                     selectedDoc === doc.id
-                      ? 'border-primary bg-primary-50'
-                      : 'border-neutral-200 hover:border-neutral-300'
+                      ? 'bg-gradient-to-r from-primary-50 to-primary-100 border-2 border-primary shadow-md'
+                      : 'bg-white border-2 border-neutral-200 hover:border-primary-300 hover:shadow-md'
                   }`}
                   onClick={() => setSelectedDoc(doc.id)}
                 >
                   <div className="flex items-start justify-between">
-                    <div className="flex items-start space-x-3 flex-1">
-                      <FileText className="h-5 w-5 text-neutral-400 mt-0.5" />
+                    <div className="flex items-start space-x-3 flex-1 min-w-0">
+                      <FileText className={`h-5 w-5 mt-0.5 flex-shrink-0 ${
+                        selectedDoc === doc.id ? 'text-primary' : 'text-neutral-400'
+                      }`} />
                       <div className="flex-1 min-w-0">
-                        <p className="font-medium text-neutral-900 truncate">{doc.filename}</p>
-                        <p className="text-sm text-neutral-500">
+                        <p className="font-semibold text-neutral-900 truncate">{doc.filename}</p>
+                        <p className="text-sm text-neutral-500 mt-1">
                           {doc.file_type} • {new Date(doc.upload_date).toLocaleDateString()}
                         </p>
-                        <span
-                          className={`inline-block mt-1 text-xs px-2 py-0.5 rounded ${
-                            doc.status === 'completed'
-                              ? 'bg-green-100 text-green-800'
-                              : doc.status === 'processing'
-                              ? 'bg-yellow-100 text-yellow-800'
-                              : 'bg-red-100 text-red-800'
-                          }`}
-                        >
+                        <span className={`badge badge-${doc.status === 'completed' ? 'primary' : 'neutral'} mt-2`}>
                           {doc.status}
                         </span>
                       </div>
@@ -166,7 +162,7 @@ export default function StudyMaterials() {
                         e.stopPropagation()
                         handleDelete(doc.id)
                       }}
-                      className="text-red-500 hover:text-red-700 ml-2"
+                      className="text-red-500 hover:text-red-700 ml-2 p-1 hover:bg-red-50 rounded-lg transition-colors"
                     >
                       <Trash2 className="h-4 w-4" />
                     </button>
@@ -183,57 +179,49 @@ export default function StudyMaterials() {
         {selectedDocument ? (
           <div className="space-y-6">
             {/* Action Buttons */}
-            <div className="card">
-              <h3 className="text-lg font-semibold mb-4 text-neutral-900">
-                Generate Study Materials
-              </h3>
+            <div className="card-elevated">
+              <h3 className="text-xl font-bold mb-6 text-neutral-900">Generate Study Materials</h3>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <button
-                  onClick={() => selectedDoc && handleGenerateSummary(selectedDoc)}
-                  disabled={generating !== null || !selectedDoc}
-                  className="flex flex-col items-center p-4 border border-neutral-200 rounded-lg hover:border-primary hover:bg-primary-50 transition-colors disabled:opacity-50"
-                >
-                  <Sparkles className="h-8 w-8 text-primary mb-2" />
-                  <span className="font-medium">Summary</span>
-                </button>
-                <button
-                  onClick={() => selectedDoc && handleGenerateFlashcards(selectedDoc)}
-                  disabled={generating !== null || !selectedDoc}
-                  className="flex flex-col items-center p-4 border border-neutral-200 rounded-lg hover:border-primary hover:bg-primary-50 transition-colors disabled:opacity-50"
-                >
-                  <Brain className="h-8 w-8 text-primary mb-2" />
-                  <span className="font-medium">Flashcards</span>
-                </button>
-                <button
-                  onClick={() => selectedDoc && handleGenerateQuiz(selectedDoc)}
-                  disabled={generating !== null || !selectedDoc}
-                  className="flex flex-col items-center p-4 border border-neutral-200 rounded-lg hover:border-primary hover:bg-primary-50 transition-colors disabled:opacity-50"
-                >
-                  <BookOpen className="h-8 w-8 text-primary mb-2" />
-                  <span className="font-medium">Quiz</span>
-                </button>
+                {[
+                  { icon: Sparkles, label: 'Summary', action: () => selectedDoc && handleGenerateSummary(selectedDoc) },
+                  { icon: Brain, label: 'Flashcards', action: () => selectedDoc && handleGenerateFlashcards(selectedDoc) },
+                  { icon: BookOpen, label: 'Quiz', action: () => selectedDoc && handleGenerateQuiz(selectedDoc) },
+                ].map(({ icon: Icon, label, action }) => (
+                  <button
+                    key={label}
+                    onClick={action}
+                    disabled={generating !== null || !selectedDoc}
+                    className="flex flex-col items-center p-6 rounded-xl border-2 border-neutral-200 hover:border-primary hover:bg-primary-50 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed group"
+                  >
+                    <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-primary-100 to-primary-200 flex items-center justify-center mb-4 group-hover:from-primary group-hover:to-primary-600 transition-all duration-200 shadow-md">
+                      <Icon className="h-8 w-8 text-primary group-hover:text-white transition-colors duration-200" />
+                    </div>
+                    <span className="font-semibold text-neutral-900">{label}</span>
+                  </button>
+                ))}
               </div>
               {generating && (
-                <div className="mt-4 flex items-center justify-center text-primary">
-                  <Loader2 className="h-5 w-5 animate-spin mr-2" />
-                  <span>Generating {generating}...</span>
+                <div className="mt-6 flex items-center justify-center space-x-3 text-primary">
+                  <Loader2 className="h-5 w-5 animate-spin" />
+                  <span className="font-medium">Generating {generating}...</span>
                 </div>
               )}
             </div>
 
             {/* Summaries */}
-            {summaries.length > 0 && (
-              <div className="card">
-                <h3 className="text-lg font-semibold mb-4 text-neutral-900">Summaries</h3>
+            {summaries.filter(s => s.document_id === selectedDoc).length > 0 && (
+              <div className="card-elevated">
+                <h3 className="text-xl font-bold mb-6 text-neutral-900 flex items-center space-x-2">
+                  <Sparkles className="h-6 w-6 text-primary" />
+                  <span>Summaries</span>
+                </h3>
                 <div className="space-y-4">
                   {summaries
                     .filter(s => s.document_id === selectedDoc)
                     .map(summary => (
-                      <div key={summary.id} className="p-4 bg-primary-50 rounded-lg">
-                        <div className="prose max-w-none">
-                          <p className="whitespace-pre-wrap">{summary.content}</p>
-                        </div>
-                        <p className="text-xs text-neutral-500 mt-2">
+                      <div key={summary.id} className="p-6 bg-gradient-to-br from-primary-50 to-primary-100 rounded-xl border border-primary-200">
+                        <p className="whitespace-pre-wrap text-neutral-900 leading-relaxed">{summary.content}</p>
+                        <p className="text-xs text-neutral-500 mt-4">
                           {new Date(summary.created_at).toLocaleString()}
                         </p>
                       </div>
@@ -243,19 +231,22 @@ export default function StudyMaterials() {
             )}
 
             {/* Flashcards */}
-            {flashcards.length > 0 && (
-              <div className="card">
-                <h3 className="text-lg font-semibold mb-4 text-neutral-900">Flashcards</h3>
+            {flashcards.filter(f => f.document_id === selectedDoc).length > 0 && (
+              <div className="card-elevated">
+                <h3 className="text-xl font-bold mb-6 text-neutral-900 flex items-center space-x-2">
+                  <Brain className="h-6 w-6 text-primary" />
+                  <span>Flashcards</span>
+                </h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {flashcards
                     .filter(f => f.document_id === selectedDoc)
                     .map(card => (
                       <div
                         key={card.id}
-                        className="p-4 border border-neutral-200 rounded-lg hover:shadow-md transition-shadow"
+                        className="p-5 bg-white border-2 border-neutral-200 rounded-xl hover:border-primary hover:shadow-lg transition-all duration-200"
                       >
-                        <div className="font-medium mb-2 text-neutral-900">{card.front}</div>
-                        <div className="text-neutral-600 text-sm">{card.back}</div>
+                        <div className="font-bold mb-3 text-neutral-900">{card.front}</div>
+                        <div className="text-neutral-600 text-sm border-t border-neutral-200 pt-3">{card.back}</div>
                       </div>
                     ))}
                 </div>
@@ -263,29 +254,34 @@ export default function StudyMaterials() {
             )}
 
             {/* Quizzes */}
-            {quizzes.length > 0 && (
-              <div className="card">
-                <h3 className="text-lg font-semibold mb-4 text-neutral-900">Quizzes</h3>
+            {quizzes.filter(q => q.document_id === selectedDoc).length > 0 && (
+              <div className="card-elevated">
+                <h3 className="text-xl font-bold mb-6 text-neutral-900 flex items-center space-x-2">
+                  <BookOpen className="h-6 w-6 text-primary" />
+                  <span>Quizzes</span>
+                </h3>
                 <div className="space-y-6">
                   {quizzes
                     .filter(q => q.document_id === selectedDoc)
                     .map(quiz => (
                       <div key={quiz.id} className="space-y-4">
                         {quiz.questions.map((q, idx) => (
-                          <div key={q.id} className="p-4 bg-primary-50 rounded-lg">
-                            <p className="font-medium mb-2">
+                          <div key={q.id} className="p-6 bg-gradient-to-br from-primary-50 to-primary-100 rounded-xl border border-primary-200">
+                            <p className="font-bold text-neutral-900 mb-3">
                               {idx + 1}. {q.question}
                             </p>
                             {q.type === 'mcq' && q.options && (
-                              <ul className="list-disc list-inside ml-4 space-y-1">
+                              <ul className="list-disc list-inside ml-4 space-y-2 mb-4">
                                 {q.options.map((opt, optIdx) => (
                                   <li key={optIdx} className="text-neutral-700">{opt}</li>
                                 ))}
                               </ul>
                             )}
-                            <p className="text-sm text-neutral-600 mt-2">
-                              Answer: {q.correct_answer}
-                            </p>
+                            <div className="pt-3 border-t border-primary-200">
+                              <p className="text-sm font-semibold text-primary">
+                                Answer: <span className="text-neutral-700">{q.correct_answer}</span>
+                              </p>
+                            </div>
                           </div>
                         ))}
                       </div>
@@ -295,13 +291,15 @@ export default function StudyMaterials() {
             )}
           </div>
         ) : (
-          <div className="card text-center py-12">
-            <FileText className="h-12 w-12 text-neutral-400 mx-auto mb-4" />
-            <p className="text-neutral-500">Select a document to generate study materials</p>
+          <div className="card-elevated text-center py-16">
+            <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-primary-100 to-primary-200 flex items-center justify-center mx-auto mb-6 shadow-lg">
+              <FileText className="h-10 w-10 text-primary" />
+            </div>
+            <p className="text-lg font-semibold text-neutral-900 mb-2">Select a document</p>
+            <p className="text-neutral-500">Choose a document to generate study materials</p>
           </div>
         )}
       </div>
     </div>
   )
 }
-
