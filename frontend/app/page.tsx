@@ -5,16 +5,27 @@ import DocumentUpload from '@/components/DocumentUpload'
 import StudyMaterials from '@/components/StudyMaterials'
 import StudyChat from '@/components/StudyChat'
 import StudyPlan from '@/components/StudyPlan'
+import IntroPage from '@/components/IntroPage'
 import Lumio from '@/components/Lumio'
 import { BookOpen, MessageSquare, FileText, Calendar } from 'lucide-react'
 
 export default function Home() {
+  const [showIntro, setShowIntro] = useState(true)
   const [activeTab, setActiveTab] = useState<'upload' | 'materials' | 'chat' | 'plan'>('upload')
   const [refreshKey, setRefreshKey] = useState(0)
 
   const handleUploadSuccess = () => {
     setRefreshKey(prev => prev + 1)
     setActiveTab('materials')
+  }
+
+  const handleGetStarted = () => {
+    setShowIntro(false)
+  }
+
+  // Show intro page first
+  if (showIntro) {
+    return <IntroPage onGetStarted={handleGetStarted} />
   }
 
   return (
