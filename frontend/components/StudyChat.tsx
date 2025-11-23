@@ -56,12 +56,15 @@ export default function StudyChat() {
     try {
       const response = await sendChatMessage(input)
       setMessages(prev => [...prev, response])
-    } catch (error) {
+    } catch (error: any) {
       console.error('Failed to send message:', error)
+      const errorContent = error?.message?.includes('not configured')
+        ? 'Backend API not configured. Please set up your backend server to use chat features.'
+        : 'Sorry, I encountered an error. Please try again.'
       const errorMessage: ChatMessage = {
         id: Date.now().toString(),
         role: 'assistant',
-        content: 'Sorry, I encountered an error. Please try again.',
+        content: errorContent,
         timestamp: new Date().toISOString(),
       }
       setMessages(prev => [...prev, errorMessage])
