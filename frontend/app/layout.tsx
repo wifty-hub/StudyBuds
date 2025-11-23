@@ -5,6 +5,10 @@ import React from 'react'
 export const metadata: Metadata = {
   title: 'StudyBudds',
   description: 'Multimodal learning platform powered by Google Gemini',
+  icons: {
+    icon: '/lumio.png',
+    apple: '/lumio.png',
+  },
 }
 
 export default function RootLayout({
