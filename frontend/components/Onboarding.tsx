@@ -52,7 +52,7 @@ export default function Onboarding({ onComplete }: OnboardingProps) {
   }
 
   return (
-    <div className="fixed inset-0 bg-background z-50 flex items-center justify-center p-4">
+    <div className="fixed inset-0 bg-[#FAFAFF] z-50 flex items-center justify-center p-4">
       <div className="max-w-2xl w-full">
         <div className="card text-center">
           <div className="flex justify-center mb-6">
