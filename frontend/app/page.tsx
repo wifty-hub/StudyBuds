@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import DocumentUpload from '@/components/DocumentUpload'
 import StudyMaterials from '@/components/StudyMaterials'
 import StudyChat from '@/components/StudyChat'
@@ -8,11 +8,25 @@ import StudyPlan from '@/components/StudyPlan'
 import IntroPage from '@/components/IntroPage'
 import Lumio from '@/components/Lumio'
 import { BookOpen, MessageSquare, FileText, Calendar } from 'lucide-react'
+import { getIntroDismissed, setIntroDismissed, getActiveTab, setActiveTab } from '@/lib/storage'
 
 export default function Home() {
   const [showIntro, setShowIntro] = useState(true)
-  const [activeTab, setActiveTab] = useState<'upload' | 'materials' | 'chat' | 'plan'>('upload')
+  const [activeTab, setActiveTabState] = useState<'upload' | 'materials' | 'chat' | 'plan'>('upload')
   const [refreshKey, setRefreshKey] = useState(0)
+
+  // Load saved state on mount
+  useEffect(() => {
+    const savedIntroDismissed = getIntroDismissed()
+    const savedActiveTab = getActiveTab()
+    setShowIntro(!savedIntroDismissed)
+    setActiveTabState(savedActiveTab)
+  }, [])
+
+  const setActiveTab = (tab: 'upload' | 'materials' | 'chat' | 'plan') => {
+    setActiveTabState(tab)
+    saveActiveTab(tab) // Save to storage
+  }
 
   const handleUploadSuccess = () => {
     setRefreshKey(prev => prev + 1)
@@ -21,6 +35,7 @@ export default function Home() {
 
   const handleGetStarted = () => {
     setShowIntro(false)
+    setIntroDismissed(true)
   }
 
   // Show intro page first

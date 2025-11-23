@@ -31,8 +31,21 @@ export default function StudyMaterials() {
     try {
       const docs = await getDocuments()
       setDocuments(docs)
+      // Cache documents for offline access
+      if (typeof window !== 'undefined') {
+        const { cacheDocuments } = await import('@/lib/storage')
+        cacheDocuments(docs)
+      }
     } catch (error: any) {
       console.error('Failed to load documents:', error)
+      // Try to load from cache if backend fails
+      if (typeof window !== 'undefined') {
+        const { getCachedDocuments } = await import('@/lib/storage')
+        const cached = getCachedDocuments()
+        if (cached) {
+          setDocuments(cached)
+        }
+      }
       // Don't show error if backend isn't configured - this is expected
       if (!error?.message?.includes('not configured')) {
         // Could show a toast notification here if needed

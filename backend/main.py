@@ -8,6 +8,7 @@ from dotenv import load_dotenv
 from pydantic import BaseModel
 from datetime import datetime
 import uuid
+from storage import storage
 
 load_dotenv()
 
@@ -26,13 +27,13 @@ app.add_middleware(
 DOCUMENT_SERVICE_URL = os.getenv("DOCUMENT_SERVICE_URL", "http://localhost:8001")
 AI_SERVICE_URL = os.getenv("AI_SERVICE_URL", "http://localhost:8002")
 
-# In-memory storage (replace with database in production)
-documents_db = []
-summaries_db = []
-flashcards_db = []
-quizzes_db = []
-chat_history_db = []
-study_plans_db = []
+# Use persistent storage
+documents_db = storage.documents
+summaries_db = storage.summaries
+flashcards_db = storage.flashcards
+quizzes_db = storage.quizzes
+chat_history_db = storage.chat_history
+study_plans_db = storage.study_plans
 
 
 class DocumentResponse(BaseModel):
@@ -99,6 +100,7 @@ async def upload_document(file: UploadFile = File(...)):
                 page_count=result.get("page_count"),
             )
             documents_db.append(document.dict())
+            storage.save_documents()
             
             return document
     except httpx.HTTPError as e:
@@ -127,6 +129,7 @@ async def delete_document(document_id: str):
     """Delete a document"""
     global documents_db
     documents_db = [d for d in documents_db if d["id"] != document_id]
+    storage.save_documents()
     return {"message": "Document deleted"}
 
 
@@ -162,6 +165,7 @@ async def create_summary(request: SummaryRequest):
                 "type": request.type,
             }
             summaries_db.append(summary)
+            storage.save_summaries()
             return summary
     except httpx.HTTPError as e:
         raise HTTPException(status_code=500, detail=f"AI service error: {str(e)}")
@@ -206,6 +210,7 @@ async def create_flashcards(request: FlashcardRequest):
                 card["created_at"] = datetime.now().isoformat()
                 flashcards_db.append(card)
             
+            storage.save_flashcards()
             return flashcards
     except httpx.HTTPError as e:
         raise HTTPException(status_code=500, detail=f"AI service error: {str(e)}")
@@ -272,6 +277,7 @@ async def create_quiz(request: QuizRequest):
                 "created_at": datetime.now().isoformat(),
             }
             quizzes_db.append(quiz)
+            storage.save_quizzes()
             return quiz
     except httpx.HTTPError as e:
         raise HTTPException(status_code=500, detail=f"AI service error: {str(e)}")
@@ -330,6 +336,7 @@ async def chat(request: ChatRequest):
                 "timestamp": datetime.now().isoformat(),
             })
             chat_history_db.append(chat_message)
+            storage.save_chat_history()
             
             return chat_message
     except httpx.HTTPError as e:
@@ -374,6 +381,7 @@ async def create_study_plan(request: StudyPlanRequest):
                 "created_at": datetime.now().isoformat(),
             }
             study_plans_db.append(study_plan)
+            storage.save_study_plans()
             return study_plan
     except httpx.HTTPError as e:
         raise HTTPException(status_code=500, detail=f"AI service error: {str(e)}")

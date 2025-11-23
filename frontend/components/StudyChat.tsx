@@ -27,8 +27,21 @@ export default function StudyChat() {
     try {
       const history = await getChatHistory()
       setMessages(history)
+      // Cache chat history
+      if (typeof window !== 'undefined') {
+        const { cacheChatHistory } = await import('@/lib/storage')
+        cacheChatHistory(history)
+      }
     } catch (error: any) {
       console.error('Failed to load chat history:', error)
+      // Try to load from cache if backend fails
+      if (typeof window !== 'undefined') {
+        const { getCachedChatHistory } = await import('@/lib/storage')
+        const cached = getCachedChatHistory()
+        if (cached) {
+          setMessages(cached)
+        }
+      }
       // Don't show error if backend isn't configured - this is expected
       if (!error?.message?.includes('not configured')) {
         // Could show a toast notification here if needed
@@ -55,7 +68,13 @@ export default function StudyChat() {
 
     try {
       const response = await sendChatMessage(input)
-      setMessages(prev => [...prev, response])
+      const newMessages = [...messages, userMessage, response]
+      setMessages(newMessages)
+      // Cache updated chat history
+      if (typeof window !== 'undefined') {
+        const { cacheChatHistory } = await import('@/lib/storage')
+        cacheChatHistory(newMessages)
+      }
     } catch (error: any) {
       console.error('Failed to send message:', error)
       const errorContent = error?.message?.includes('not configured')
