@@ -174,6 +174,7 @@ export default function StudyMaterials() {
               ))}
             </div>
           )}
+          </div>
         </div>
       </div>
 
