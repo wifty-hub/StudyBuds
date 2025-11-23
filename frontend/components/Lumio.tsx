@@ -1,18 +1,19 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import Image from 'next/image'
 
 interface LumioProps {
   size?: number
   animated?: boolean
-  variant?: 'default' | 'with-book' | 'with-tablet'
+  variant?: 'default' | 'with-book' | 'with-tablet' | 'image'
   className?: string
 }
 
 export default function Lumio({
   size = 120,
   animated = false,
-  variant = 'with-book',
+  variant = 'image',
   className = '',
 }: LumioProps) {
   const [isBlinking, setIsBlinking] = useState(false)
@@ -30,6 +31,22 @@ export default function Lumio({
   }, [animated])
 
   const scale = size / 120
+
+  // Use image variant if specified
+  if (variant === 'image') {
+    return (
+      <div className={`inline-block ${className}`} style={{ width: size, height: size }}>
+        <Image
+          src="/lumio.png"
+          alt="Lumio the Owl"
+          width={size}
+          height={size}
+          className="object-contain"
+          priority
+        />
+      </div>
+    )
+  }
 
   return (
     <svg
