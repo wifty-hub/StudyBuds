@@ -43,33 +43,56 @@ A carefully curated palette that supports clarity, trust, and a modern academic 
 
 | Purpose | Color Name | Hex | Usage |
 |---------|-----------|-----|-------|
-| **Primary** | Soft Indigo | `#5966FF` | Main actions, links, primary buttons |
-| **Background** | Cloud White | `#FAFAFF` | Page backgrounds, cards |
-| **Secondary** | Lavender Mist | `#C9CFFF` | Secondary elements, highlights |
-| **Neutral** | Warm Gray | `#8C8C9E` | Text, borders, subtle elements |
-| **Accent** | Gold Highlight | `#FFC857` | Achievements, highlights, Lumio's lightbulb |
+| **Primary** | Indigo | `#5966FF` | Main brand color, buttons, highlights, links |
+| **Primary Dark** | Deep Indigo | `#3C46CC` | Hover states, dark mode UI, emphasis |
+| **Background** | Cloud White | `#FAFAFF` | Main background |
+| **Background Soft** | Soft Slate | `#F1F1F6` | Cards, containers, subtle sections |
+| **Background Dark** | Dark Charcoal | `#0F0F19` | Dark mode background |
+| **Secondary** | Lavender Mist | `#C9CFFF` | Soft backgrounds, info cards, section dividers |
+| **Neutral** | Warm Gray | `#8C8C9E` | Text, icons, subtle UI elements |
+| **Accent** | Gold Highlight | `#FFC857` | Callout elements, success states, important visual cues |
 
 ### Color Psychology
 
 - **Indigo (#5966FF)**: Intelligence + Reliability
   - Represents trust, wisdom, and academic excellence
   - Used for primary actions and important elements
+  - Main brand color throughout the application
 
-- **Gold (#FFC857)**: Achievement + Highlights
+- **Deep Indigo (#3C46CC)**: Depth + Emphasis
+  - Darker variant for hover states and dark mode
+  - Provides visual hierarchy and emphasis
+  - Used for interactive elements in dark mode
+
+- **Gold Highlight (#FFC857)**: Achievement + Highlights
   - Represents success, accomplishment, and illumination
   - Used for achievements, highlights, and Lumio's signature lightbulb
+  - Perfect for callout elements and success states
 
 - **Lavender Mist (#C9CFFF)**: Calm + Focus
   - Soft, calming tone that reduces eye strain
   - Perfect for backgrounds and secondary elements
+  - Used for info cards and section dividers
 
 - **Warm Gray (#8C8C9E)**: Clarity + Readability
   - Neutral tone that doesn't compete with content
   - Excellent for text and subtle UI elements
+  - Used for icons and secondary text
 
 - **Cloud White (#FAFAFF)**: Clean + Modern
   - Slightly tinted white for reduced glare
   - Ideal for long study sessions
+  - Main background color
+
+- **Soft Slate (#F1F1F6)**: Subtle + Structured
+  - Used for cards, containers, and subtle sections
+  - Provides gentle visual separation
+  - Softer than white but lighter than gray
+
+- **Dark Charcoal (#0F0F19)**: Depth + Focus
+  - Dark mode background color
+  - Reduces eye strain in low-light conditions
+  - Provides high contrast for content
 
 ### Usage Guidelines
 

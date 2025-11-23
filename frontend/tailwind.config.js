@@ -24,20 +24,22 @@ module.exports = {
     extend: {
       colors: {
         primary: {
-          DEFAULT: '#5966FF', // Soft Indigo
+          DEFAULT: '#5966FF', // Indigo - Main brand color
           50: '#F5F6FF',
           100: '#E8EAFF',
           200: '#C9CFFF', // Lavender Mist
           300: '#9BA3FF',
           400: '#7A84FF',
-          500: '#5966FF', // Primary Soft Indigo
+          500: '#5966FF', // Indigo
           600: '#4A55E6',
-          700: '#3D47CC',
+          700: '#3C46CC', // Deep Indigo (Dark Mode Primary)
           800: '#3139B3',
           900: '#252B99',
         },
         background: {
           DEFAULT: '#FAFAFF', // Cloud White
+          soft: '#F1F1F6', // Soft Slate
+          dark: '#0F0F19', // Dark Charcoal
         },
         neutral: {
           DEFAULT: '#8C8C9E', // Warm Gray
@@ -64,6 +66,11 @@ module.exports = {
           700: '#E69400',
           800: '#CC8300',
           900: '#B37200',
+        },
+        // Dark mode colors
+        dark: {
+          primary: '#3C46CC', // Deep Indigo
+          background: '#0F0F19', // Dark Charcoal
         },
       },
     },
