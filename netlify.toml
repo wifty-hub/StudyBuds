@@ -4,7 +4,7 @@
 
 [build.environment]
   NODE_VERSION = "18"
-  NEXT_PUBLIC_API_URL = "https://your-backend-url.com"
+  # NEXT_PUBLIC_API_URL = "https://your-backend-url.com"  # Set this in Netlify dashboard under Site Settings > Environment Variables
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"

@@ -31,8 +31,12 @@ export default function StudyMaterials() {
     try {
       const docs = await getDocuments()
       setDocuments(docs)
-    } catch (error) {
+    } catch (error: any) {
       console.error('Failed to load documents:', error)
+      // Don't show error if backend isn't configured - this is expected
+      if (!error?.message?.includes('not configured')) {
+        // Could show a toast notification here if needed
+      }
     } finally {
       setLoading(false)
     }

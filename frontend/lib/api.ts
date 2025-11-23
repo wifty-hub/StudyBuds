@@ -2,12 +2,28 @@ import axios from 'axios'
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'
 
+// Check if API URL is a placeholder
+const isValidApiUrl = API_URL && !API_URL.includes('your-backend-url.com')
+
 const api = axios.create({
-  baseURL: API_URL,
+  baseURL: isValidApiUrl ? API_URL : '',
   headers: {
     'Content-Type': 'application/json',
   },
 })
+
+// Add request interceptor to handle missing backend gracefully
+api.interceptors.request.use(
+  (config) => {
+    if (!isValidApiUrl) {
+      return Promise.reject(new Error('Backend API URL not configured. Please set NEXT_PUBLIC_API_URL environment variable.'))
+    }
+    return config
+  },
+  (error) => {
+    return Promise.reject(error)
+  }
+)
 
 export interface Document {
   id: string

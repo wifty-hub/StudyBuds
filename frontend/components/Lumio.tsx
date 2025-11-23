@@ -1,7 +1,6 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import Image from 'next/image'
 
 interface LumioProps {
   size?: number
@@ -36,13 +35,13 @@ export default function Lumio({
   if (variant === 'image') {
     return (
       <div className={`inline-block ${className}`} style={{ width: size, height: size }}>
-        <Image
+        <img
           src="/lumio.png"
           alt="Lumio the Owl"
           width={size}
           height={size}
           className="object-contain"
-          priority
+          style={{ width: size, height: size }}
         />
       </div>
     )

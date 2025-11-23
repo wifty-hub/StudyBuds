@@ -27,8 +27,12 @@ export default function StudyChat() {
     try {
       const history = await getChatHistory()
       setMessages(history)
-    } catch (error) {
+    } catch (error: any) {
       console.error('Failed to load chat history:', error)
+      // Don't show error if backend isn't configured - this is expected
+      if (!error?.message?.includes('not configured')) {
+        // Could show a toast notification here if needed
+      }
     } finally {
       setLoadingHistory(false)
     }

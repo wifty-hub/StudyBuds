@@ -28,9 +28,12 @@ export default function DocumentUpload({ onSuccess }: DocumentUploadProps) {
         setUploading(false)
         onSuccess?.()
       }, 2000)
-    } catch (error) {
+    } catch (error: any) {
       console.error('Upload error:', error)
-      setUploadStatus('Upload failed. Please try again.')
+      const errorMessage = error?.message?.includes('not configured') 
+        ? 'Backend API not configured. Please set up your backend server.'
+        : 'Upload failed. Please try again.'
+      setUploadStatus(errorMessage)
       setUploading(false)
     }
   }, [onSuccess])
