@@ -141,11 +141,13 @@ Once running, visit:
 
 **Want to deploy? Start here:** [EASY_DEPLOY.md](./EASY_DEPLOY.md) ⚡
 
-**Easiest Option:**
-1. **Frontend**: Deploy to Vercel (2 minutes, free)
-2. **Backend**: Deploy to Render (10 minutes, free tier)
+**Recommended Options:**
+- **Frontend**: [Netlify](NETLIFY_DEPLOY.md) (easiest) or Vercel (2 minutes, free)
+- **Backend**: Deploy to Render or Railway (10 minutes, free tier)
 
-**Full Guide**: See [DEPLOYMENT.md](./DEPLOYMENT.md) for all options and details.
+**Quick Links:**
+- [Netlify Deployment Guide](./NETLIFY_DEPLOY.md) 🚀
+- [Full Deployment Guide](./DEPLOYMENT.md) - All options and details
 
 ## 🎨 Branding
 
