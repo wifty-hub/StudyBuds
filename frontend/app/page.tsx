@@ -21,7 +21,7 @@ export default function Home() {
   const handleGetStarted = () => {
     setShowIntro(false)
     setIntroDismissed(true)
-    // Don't navigate - just show the main page content without navigation
+    // Show main page content without navigation
   }
 
   // Show intro page without navigation

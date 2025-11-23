@@ -4,6 +4,7 @@ import { useState, useCallback } from 'react'
 import { useDropzone } from 'react-dropzone'
 import { Upload, FileText, Loader2, Cloud } from 'lucide-react'
 import { uploadDocument, Document } from '@/lib/api'
+import BackendStatus from './BackendStatus'
 
 interface DocumentUploadProps {
   onSuccess?: () => void
@@ -51,6 +52,7 @@ export default function DocumentUpload({ onSuccess }: DocumentUploadProps) {
 
   return (
     <div className="max-w-3xl mx-auto">
+      <BackendStatus />
       <div className="card-elevated">
         <div className="flex items-center space-x-3 mb-8">
           <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary to-primary-600 flex items-center justify-center shadow-lg">

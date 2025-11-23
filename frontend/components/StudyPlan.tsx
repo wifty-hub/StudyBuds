@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { Calendar, Clock, BookOpen, Loader2, Sparkles } from 'lucide-react'
 import { generateStudyPlan, getStudyPlans, getDocuments, StudyPlan, Document } from '@/lib/api'
+import BackendStatus from './BackendStatus'
 
 export default function StudyPlan() {
   const [studyPlans, setStudyPlans] = useState<StudyPlan[]>([])
@@ -75,6 +76,7 @@ export default function StudyPlan() {
 
   return (
     <div className="max-w-6xl mx-auto space-y-6">
+      <BackendStatus />
       {/* Generate New Plan */}
       <div className="card">
         <h2 className="text-2xl font-bold mb-6 text-neutral-900">Create Study Plan</h2>

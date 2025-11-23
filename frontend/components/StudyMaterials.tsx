@@ -13,6 +13,7 @@ import {
   Flashcard,
   Quiz,
 } from '@/lib/api'
+import BackendStatus from './BackendStatus'
 
 export default function StudyMaterials() {
   const [documents, setDocuments] = useState<Document[]>([])
@@ -115,9 +116,11 @@ export default function StudyMaterials() {
   }
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-      {/* Documents List */}
-      <div className="lg:col-span-1">
+    <div className="space-y-6">
+      <BackendStatus />
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Documents List */}
+        <div className="lg:col-span-1">
         <div className="card-elevated">
           <div className="flex items-center space-x-3 mb-6">
             <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-primary-600 flex items-center justify-center shadow-lg">

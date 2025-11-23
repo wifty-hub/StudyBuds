@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { Send, Loader2, MessageSquare, Bot, User } from 'lucide-react'
 import { sendChatMessage, getChatHistory, ChatMessage } from '@/lib/api'
+import BackendStatus from './BackendStatus'
 
 export default function StudyChat() {
   const [messages, setMessages] = useState<ChatMessage[]>([])
@@ -95,6 +96,7 @@ export default function StudyChat() {
 
   return (
     <div className="max-w-5xl mx-auto">
+      <BackendStatus />
       <div className="card-elevated h-[calc(100vh-250px)] flex flex-col">
         {/* Header */}
         <div className="flex items-center space-x-3 mb-6 pb-6 border-b border-neutral-200">

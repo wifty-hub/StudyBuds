@@ -2,25 +2,40 @@ import axios from 'axios'
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'
 
-// Check if API URL is a placeholder
-const isValidApiUrl = API_URL && !API_URL.includes('your-backend-url.com')
+// Check if API URL is a placeholder or invalid
+const isValidApiUrl = API_URL && 
+  !API_URL.includes('your-backend-url.com') && 
+  API_URL !== 'http://localhost:8000' || 
+  (typeof window !== 'undefined' && window.location.hostname === 'localhost')
 
 const api = axios.create({
   baseURL: isValidApiUrl ? API_URL : '',
   headers: {
     'Content-Type': 'application/json',
   },
+  timeout: 30000, // 30 second timeout
 })
 
 // Add request interceptor to handle missing backend gracefully
 api.interceptors.request.use(
   (config) => {
     if (!isValidApiUrl) {
-      return Promise.reject(new Error('Backend API URL not configured. Please set NEXT_PUBLIC_API_URL environment variable.'))
+      return Promise.reject(new Error('Backend API not configured'))
     }
     return config
   },
   (error) => {
+    return Promise.reject(error)
+  }
+)
+
+// Add response interceptor for better error handling
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.code === 'ERR_NETWORK' || error.message === 'Network Error') {
+      return Promise.reject(new Error('Unable to connect to backend server. Please ensure the backend is running.'))
+    }
     return Promise.reject(error)
   }
 )
@@ -87,6 +102,17 @@ export interface StudyTopic {
   priority: number
   estimated_time: number
   document_ids: string[]
+}
+
+// Helper function to check backend availability
+export const checkBackendAvailable = async (): Promise<boolean> => {
+  if (!isValidApiUrl) return false
+  try {
+    const response = await axios.get(`${API_URL}/`, { timeout: 5000 })
+    return response.status === 200
+  } catch {
+    return false
+  }
 }
 
 // Document APIs
@@ -203,4 +229,3 @@ export const getStudyPlans = async (): Promise<StudyPlan[]> => {
 }
 
 export default api
-
