@@ -6,7 +6,10 @@ export const metadata: Metadata = {
   title: 'StudyBudds',
   description: 'Multimodal learning platform powered by Google Gemini',
   icons: {
-    icon: '/lumio.png',
+    icon: [
+      { url: '/lumio.png', sizes: 'any' },
+      { url: '/favicon.ico', sizes: 'any' },
+    ],
     apple: '/lumio.png',
   },
 }

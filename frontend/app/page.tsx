@@ -21,7 +21,7 @@ export default function Home() {
   const handleGetStarted = () => {
     setShowIntro(false)
     setIntroDismissed(true)
-    router.push('/upload')
+    // Don't navigate - just show the main page content without navigation
   }
 
   // Show intro page without navigation
@@ -77,8 +77,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen flex flex-col overflow-x-hidden w-full">
-      <Navigation />
-      
+      {/* No Navigation - just the main page content */}
       <div className="flex-1 flex flex-col relative overflow-hidden">
         {/* Animated Background */}
         <div className="absolute inset-0 bg-gradient-to-br from-primary-50 via-background via-60% to-primary-100">
