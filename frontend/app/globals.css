@@ -223,4 +223,9 @@
   .animate-slide-in-up {
     animation: slideInUp 0.4s ease-out;
   }
+
+  /* Stagger animation delay utility */
+  [style*="animation-delay"] {
+    animation-fill-mode: both;
+  }
 }
