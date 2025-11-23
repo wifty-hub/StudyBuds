@@ -1,0 +1,46 @@
+services:
+  # Backend Gateway
+  - type: web
+    name: ai-study-backend
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: DOCUMENT_SERVICE_URL
+        sync: false
+      - key: AI_SERVICE_URL
+        sync: false
+      - key: CORS_ORIGINS
+        sync: false
+
+  # Document Service
+  - type: web
+    name: ai-study-document
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    rootDir: services/document
+
+  # AI Service
+  - type: web
+    name: ai-study-ai
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    rootDir: services/ai
+    envVars:
+      - key: GEMINI_API_KEY
+        sync: false
+
+  # Frontend
+  - type: web
+    name: ai-study-frontend
+    env: node
+    buildCommand: cd frontend && npm install && npm run build
+    startCommand: cd frontend && npm start
+    envVars:
+      - key: NEXT_PUBLIC_API_URL
+        sync: false
+
