@@ -103,7 +103,7 @@ export default function StudyChat() {
               >
                 <p className="whitespace-pre-wrap">{message.content}</p>
                 {message.citations && message.citations.length > 0 && (
-                  <div className="mt-2 pt-2 border-t border-gray-300">
+                  <div className="mt-2 pt-2 border-t border-neutral-300">
                     <p className="text-xs font-medium mb-1">Sources:</p>
                     <ul className="text-xs space-y-1">
                       {message.citations.map((citation, idx) => (
