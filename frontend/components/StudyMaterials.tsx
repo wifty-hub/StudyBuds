@@ -172,24 +172,24 @@ export default function StudyMaterials() {
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <button
-                  onClick={() => handleGenerateSummary(selectedDoc)}
-                  disabled={generating !== null}
+                  onClick={() => selectedDoc && handleGenerateSummary(selectedDoc)}
+                  disabled={generating !== null || !selectedDoc}
                   className="flex flex-col items-center p-4 border border-neutral-200 rounded-lg hover:border-primary hover:bg-primary-50 transition-colors disabled:opacity-50"
                 >
                   <Sparkles className="h-8 w-8 text-primary mb-2" />
                   <span className="font-medium">Summary</span>
                 </button>
                 <button
-                  onClick={() => handleGenerateFlashcards(selectedDoc)}
-                  disabled={generating !== null}
+                  onClick={() => selectedDoc && handleGenerateFlashcards(selectedDoc)}
+                  disabled={generating !== null || !selectedDoc}
                   className="flex flex-col items-center p-4 border border-neutral-200 rounded-lg hover:border-primary hover:bg-primary-50 transition-colors disabled:opacity-50"
                 >
                   <Brain className="h-8 w-8 text-primary mb-2" />
                   <span className="font-medium">Flashcards</span>
                 </button>
                 <button
-                  onClick={() => handleGenerateQuiz(selectedDoc)}
-                  disabled={generating !== null}
+                  onClick={() => selectedDoc && handleGenerateQuiz(selectedDoc)}
+                  disabled={generating !== null || !selectedDoc}
                   className="flex flex-col items-center p-4 border border-neutral-200 rounded-lg hover:border-primary hover:bg-primary-50 transition-colors disabled:opacity-50"
                 >
                   <BookOpen className="h-8 w-8 text-primary mb-2" />
