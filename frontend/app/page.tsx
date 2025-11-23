@@ -1,99 +1,71 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import DocumentUpload from '@/components/DocumentUpload'
-import StudyMaterials from '@/components/StudyMaterials'
-import StudyChat from '@/components/StudyChat'
-import StudyPlan from '@/components/StudyPlan'
 import IntroPage from '@/components/IntroPage'
-import Lumio from '@/components/Lumio'
-import { BookOpen, MessageSquare, FileText, Calendar } from 'lucide-react'
-import { getIntroDismissed, setIntroDismissed, getActiveTab, setActiveTab as saveActiveTab } from '@/lib/storage'
+import Navigation from '@/components/Navigation'
+import { getIntroDismissed, setIntroDismissed } from '@/lib/storage'
+import { useRouter } from 'next/navigation'
 
 export default function Home() {
   const [showIntro, setShowIntro] = useState(true)
-  const [activeTab, setActiveTabState] = useState<'upload' | 'materials' | 'chat' | 'plan'>('upload')
-  const [refreshKey, setRefreshKey] = useState(0)
+  const router = useRouter()
 
-  // Load saved state on mount
   useEffect(() => {
     const savedIntroDismissed = getIntroDismissed()
-    const savedActiveTab = getActiveTab()
     setShowIntro(!savedIntroDismissed)
-    setActiveTabState(savedActiveTab)
   }, [])
-
-  const setActiveTab = (tab: 'upload' | 'materials' | 'chat' | 'plan') => {
-    setActiveTabState(tab)
-    saveActiveTab(tab)
-  }
-
-  const handleUploadSuccess = () => {
-    setRefreshKey(prev => prev + 1)
-    setActiveTab('materials')
-  }
 
   const handleGetStarted = () => {
     setShowIntro(false)
     setIntroDismissed(true)
+    router.push('/upload')
   }
 
-  // Show intro page first
+  // Show intro page without navigation
   if (showIntro) {
     return <IntroPage onGetStarted={handleGetStarted} />
   }
 
-  const navItems = [
-    { id: 'upload', icon: FileText, label: 'Upload' },
-    { id: 'materials', icon: BookOpen, label: 'Materials' },
-    { id: 'chat', icon: MessageSquare, label: 'Chat' },
-    { id: 'plan', icon: Calendar, label: 'Plan' },
-  ] as const
-
+  // Show home page with navigation
   return (
     <div className="min-h-screen flex flex-col">
-      {/* Modern Header */}
-      <header className="glass sticky top-0 z-50 border-b border-primary-100/50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-20">
-            {/* Logo */}
-            <div className="flex items-center space-x-4">
-              <div className="relative">
-                <Lumio size={48} animated variant="image" />
-                <div className="absolute -top-1 -right-1 w-3 h-3 bg-accent rounded-full animate-pulse"></div>
-              </div>
-              <div>
-                <h1 className="text-2xl font-bold gradient-text">StudyBudds</h1>
-                <p className="text-xs text-neutral-500">Your AI Study Companion</p>
-              </div>
-            </div>
-
-            {/* Navigation */}
-            <nav className="flex items-center space-x-2 bg-white/50 backdrop-blur-sm rounded-2xl p-1.5 border border-primary-100/50">
-              {navItems.map(({ id, icon: Icon, label }) => (
-                <button
-                  key={id}
-                  onClick={() => setActiveTab(id)}
-                  className={`nav-item ${
-                    activeTab === id ? 'nav-item-active' : 'nav-item-inactive'
-                  }`}
-                >
-                  <Icon className="h-5 w-5" />
-                  <span className="hidden sm:inline">{label}</span>
-                </button>
-              ))}
-            </nav>
+      <Navigation />
+      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="text-center">
+          <h1 className="text-5xl font-bold gradient-text mb-4">Welcome to StudyBudds</h1>
+          <p className="text-xl text-neutral-600 mb-8">
+            Your intelligent study companion powered by Google Gemini AI
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-12">
+            <a
+              href="/upload"
+              className="card hover:scale-105 transition-transform duration-200"
+            >
+              <h3 className="text-xl font-bold text-neutral-900 mb-2">Upload Documents</h3>
+              <p className="text-neutral-600">Start by uploading your study materials</p>
+            </a>
+            <a
+              href="/materials"
+              className="card hover:scale-105 transition-transform duration-200"
+            >
+              <h3 className="text-xl font-bold text-neutral-900 mb-2">Study Materials</h3>
+              <p className="text-neutral-600">View and generate summaries, flashcards, and quizzes</p>
+            </a>
+            <a
+              href="/chat"
+              className="card hover:scale-105 transition-transform duration-200"
+            >
+              <h3 className="text-xl font-bold text-neutral-900 mb-2">AI Chat</h3>
+              <p className="text-neutral-600">Ask questions about your materials</p>
+            </a>
+            <a
+              href="/plan"
+              className="card hover:scale-105 transition-transform duration-200"
+            >
+              <h3 className="text-xl font-bold text-neutral-900 mb-2">Study Plan</h3>
+              <p className="text-neutral-600">Get personalized study schedules</p>
+            </a>
           </div>
-        </div>
-      </header>
-
-      {/* Main Content */}
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="animate-in fade-in duration-500">
-          {activeTab === 'upload' && <DocumentUpload onSuccess={handleUploadSuccess} />}
-          {activeTab === 'materials' && <StudyMaterials key={refreshKey} />}
-          {activeTab === 'chat' && <StudyChat />}
-          {activeTab === 'plan' && <StudyPlan />}
         </div>
       </main>
     </div>

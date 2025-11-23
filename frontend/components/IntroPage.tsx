@@ -91,6 +91,9 @@ export default function IntroPage({ onGetStarted }: IntroPageProps) {
               <span>Get Started</span>
               <ArrowRight className="h-6 w-6 group-hover:translate-x-2 transition-transform duration-300" />
             </button>
+            <p className="text-sm text-neutral-500 mt-4">
+              Or <a href="/upload" className="text-primary hover:underline font-medium">upload a document</a> to begin
+            </p>
           </div>
 
           {/* Features Grid */}
