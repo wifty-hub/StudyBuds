@@ -46,14 +46,14 @@ export default function StudyChat() {
     }
   }
 
-  const handleSend = async (e: React.FormEvent) => {
+  const handleSend = async (e: React.FormEvent | React.KeyboardEvent) => {
     e.preventDefault()
     if (!input.trim() || loading) return
 
     const userMessage: ChatMessage = {
       id: Date.now().toString(),
       role: 'user',
-      content: input,
+      content: input.trim(),
       timestamp: new Date().toISOString(),
     }
 
@@ -112,18 +112,22 @@ export default function StudyChat() {
         {/* Messages */}
         <div className="flex-1 overflow-y-auto space-y-6 mb-6 pr-2">
           {messages.length === 0 ? (
-            <div className="text-center py-16">
-              <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-primary-100 to-primary-200 flex items-center justify-center mx-auto mb-6 shadow-lg">
+            <div className="text-center py-16 animate-fade-in">
+              <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-primary-100 to-primary-200 flex items-center justify-center mx-auto mb-6 shadow-lg animate-pulse">
                 <Bot className="h-10 w-10 text-primary" />
               </div>
               <p className="text-lg font-semibold text-neutral-900 mb-2">Start a conversation</p>
-              <p className="text-neutral-500">Ask questions and get answers with citations</p>
+              <p className="text-neutral-500 mb-4">Ask questions and get answers with citations</p>
+              <div className="flex flex-wrap justify-center gap-2 mt-6">
+                <span className="text-xs text-neutral-400 bg-neutral-100 px-3 py-1 rounded-full">Try: "Summarize chapter 1"</span>
+                <span className="text-xs text-neutral-400 bg-neutral-100 px-3 py-1 rounded-full">Try: "Explain this concept"</span>
+              </div>
             </div>
           ) : (
             messages.map(message => (
               <div
                 key={message.id}
-                className={`flex items-start space-x-3 ${message.role === 'user' ? 'flex-row-reverse space-x-reverse' : ''}`}
+                className={`flex items-start space-x-3 animate-slide-in-up ${message.role === 'user' ? 'flex-row-reverse space-x-reverse' : ''}`}
               >
                 <div className={`flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center ${
                   message.role === 'user'
@@ -183,13 +187,24 @@ export default function StudyChat() {
             placeholder="Ask a question about your study materials..."
             className="input-field flex-1"
             disabled={loading}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' && !e.shiftKey && input.trim() && !loading) {
+                e.preventDefault()
+                handleSend(e)
+              }
+            }}
           />
           <button
             type="submit"
             disabled={!input.trim() || loading}
-            className="btn-primary px-6"
+            className="btn-primary px-6 disabled:hover:scale-100"
+            title={!input.trim() ? 'Enter a message to send' : 'Send message'}
           >
-            <Send className="h-5 w-5" />
+            {loading ? (
+              <Loader2 className="h-5 w-5 animate-spin" />
+            ) : (
+              <Send className="h-5 w-5" />
+            )}
           </button>
         </form>
       </div>

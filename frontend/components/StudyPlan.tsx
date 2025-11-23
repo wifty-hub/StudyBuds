@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import Link from 'next/link'
 import { Calendar, Clock, BookOpen, Loader2, Sparkles } from 'lucide-react'
 import { generateStudyPlan, getStudyPlans, getDocuments, StudyPlan, Document } from '@/lib/api'
 import BackendStatus from './BackendStatus'
@@ -30,7 +31,7 @@ export default function StudyPlan() {
 
   const handleGeneratePlan = async () => {
     if (selectedDocs.length === 0) {
-      alert('Please select at least one document')
+      alert('Please select at least one document to create a study plan.')
       return
     }
 
@@ -39,9 +40,12 @@ export default function StudyPlan() {
       const plan = await generateStudyPlan(selectedDocs)
       setStudyPlans(prev => [plan, ...prev])
       setSelectedDocs([])
-    } catch (error) {
+    } catch (error: any) {
       console.error('Failed to generate study plan:', error)
-      alert('Failed to generate study plan. Please try again.')
+      const errorMsg = error?.message?.includes('not configured')
+        ? 'Backend API not configured. Please set up your backend server.'
+        : 'Failed to generate study plan. Please try again.'
+      alert(errorMsg)
     } finally {
       setGenerating(false)
     }
@@ -82,9 +86,16 @@ export default function StudyPlan() {
         <h2 className="text-2xl font-bold mb-6 text-neutral-900">Create Study Plan</h2>
         
         {documents.length === 0 ? (
-          <p className="text-neutral-500 text-center py-8">
-            Upload and process documents first to create a study plan
-          </p>
+          <div className="text-center py-12 animate-fade-in">
+            <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-neutral-100 to-neutral-200 flex items-center justify-center mx-auto mb-4">
+              <BookOpen className="h-8 w-8 text-neutral-400" />
+            </div>
+            <p className="text-neutral-600 font-medium mb-1">No documents available</p>
+            <p className="text-sm text-neutral-500 mb-4">Upload and process documents first to create a study plan</p>
+            <Link href="/upload" className="btn-secondary inline-flex items-center space-x-2">
+              <span>Upload Documents</span>
+            </Link>
+          </div>
         ) : (
           <>
             <div className="mb-6">
@@ -96,11 +107,12 @@ export default function StudyPlan() {
                   <button
                     key={doc.id}
                     onClick={() => toggleDocument(doc.id)}
-                    className={`p-3 border-2 rounded-lg text-left transition-colors ${
+                    className={`p-3 border-2 rounded-lg text-left transition-all duration-200 ${
                       selectedDocs.includes(doc.id)
-                        ? 'border-primary bg-primary-50'
-                        : 'border-neutral-200 hover:border-neutral-300'
+                        ? 'border-primary bg-primary-50 shadow-md scale-105'
+                        : 'border-neutral-200 hover:border-primary-300 hover:shadow-sm'
                     }`}
+                    title={selectedDocs.includes(doc.id) ? 'Click to deselect' : 'Click to select'}
                   >
                     <p className="font-medium text-sm">{doc.filename}</p>
                     <p className="text-xs text-neutral-500 mt-1">{doc.file_type}</p>
@@ -149,7 +161,7 @@ export default function StudyPlan() {
                   .map((topic, idx) => (
                     <div
                       key={topic.id}
-                      className="p-4 border border-gray-200 rounded-lg hover:shadow-md transition-shadow"
+                      className="p-4 border-2 border-neutral-200 rounded-xl hover:shadow-lg hover:border-primary-200 transition-all duration-200 animate-fade-in"
                     >
                       <div className="flex items-start justify-between mb-2">
                         <div className="flex items-center space-x-3">

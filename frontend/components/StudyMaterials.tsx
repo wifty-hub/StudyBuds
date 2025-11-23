@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import Link from 'next/link'
 import { BookOpen, FileText, Sparkles, Brain, Trash2, Loader2 } from 'lucide-react'
 import {
   getDocuments,
@@ -50,8 +51,8 @@ export default function StudyMaterials() {
     }
   }
 
-  const handleDelete = async (id: string) => {
-    if (!confirm('Are you sure you want to delete this document?')) return
+  const handleDelete = async (id: string, filename: string) => {
+    if (!confirm(`Are you sure you want to delete "${filename}"?`)) return
     try {
       await deleteDocument(id)
       setDocuments(docs => docs.filter(d => d.id !== id))
@@ -63,6 +64,7 @@ export default function StudyMaterials() {
       }
     } catch (error) {
       console.error('Failed to delete document:', error)
+      alert('Failed to delete document. Please try again.')
     }
   }
 
@@ -129,9 +131,12 @@ export default function StudyMaterials() {
             <h2 className="text-2xl font-bold text-neutral-900">Documents</h2>
           </div>
           {documents.length === 0 ? (
-            <div className="text-center py-12">
-              <FileText className="h-12 w-12 text-neutral-300 mx-auto mb-4" />
-              <p className="text-neutral-500">No documents uploaded yet</p>
+            <div className="text-center py-12 animate-fade-in">
+              <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-neutral-100 to-neutral-200 flex items-center justify-center mx-auto mb-4">
+                <FileText className="h-8 w-8 text-neutral-400" />
+              </div>
+              <p className="text-neutral-600 font-medium mb-1">No documents uploaded yet</p>
+              <p className="text-sm text-neutral-500">Upload your first document to get started</p>
             </div>
           ) : (
             <div className="space-y-3">
@@ -163,9 +168,10 @@ export default function StudyMaterials() {
                     <button
                       onClick={(e) => {
                         e.stopPropagation()
-                        handleDelete(doc.id)
+                        handleDelete(doc.id, doc.filename)
                       }}
-                      className="text-red-500 hover:text-red-700 ml-2 p-1 hover:bg-red-50 rounded-lg transition-colors"
+                      className="text-red-500 hover:text-red-700 ml-2 p-1.5 hover:bg-red-50 rounded-lg transition-all duration-200 hover:scale-110 active:scale-95"
+                      title={`Delete ${doc.filename}`}
                     >
                       <Trash2 className="h-4 w-4" />
                     </button>
@@ -195,7 +201,8 @@ export default function StudyMaterials() {
                     key={label}
                     onClick={action}
                     disabled={generating !== null || !selectedDoc}
-                    className="flex flex-col items-center p-6 rounded-xl border-2 border-neutral-200 hover:border-primary hover:bg-primary-50 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed group"
+                    className="flex flex-col items-center p-6 rounded-xl border-2 border-neutral-200 hover:border-primary hover:bg-primary-50 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed group hover:scale-105 active:scale-95"
+                    title={!selectedDoc ? 'Select a document first' : `Generate ${label.toLowerCase()}`}
                   >
                     <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-primary-100 to-primary-200 flex items-center justify-center mb-4 group-hover:from-primary group-hover:to-primary-600 transition-all duration-200 shadow-md">
                       <Icon className="h-8 w-8 text-primary group-hover:text-white transition-colors duration-200" />
@@ -295,12 +302,18 @@ export default function StudyMaterials() {
             )}
           </div>
         ) : (
-          <div className="card-elevated text-center py-16">
+          <div className="card-elevated text-center py-16 animate-fade-in">
             <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-primary-100 to-primary-200 flex items-center justify-center mx-auto mb-6 shadow-lg">
               <FileText className="h-10 w-10 text-primary" />
             </div>
             <p className="text-lg font-semibold text-neutral-900 mb-2">Select a document</p>
-            <p className="text-neutral-500">Choose a document to generate study materials</p>
+            <p className="text-neutral-500 mb-4">Choose a document from the list to generate study materials</p>
+            <Link
+              href="/upload"
+              className="btn-secondary inline-flex items-center space-x-2 mt-4"
+            >
+              <span>Upload Document</span>
+            </Link>
           </div>
         )}
       </div>

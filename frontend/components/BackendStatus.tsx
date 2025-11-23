@@ -22,12 +22,12 @@ export default function BackendStatus() {
   }
 
   return (
-    <div className="bg-accent-50 border-2 border-accent-200 rounded-xl p-4 mb-6 flex items-start space-x-3">
-      <AlertCircle className="h-5 w-5 text-accent-600 flex-shrink-0 mt-0.5" />
+    <div className="bg-accent-50/80 border-2 border-accent-200 rounded-xl p-4 mb-6 flex items-start space-x-3 animate-fade-in backdrop-blur-sm">
+      <AlertCircle className="h-5 w-5 text-accent-600 flex-shrink-0 mt-0.5 animate-pulse" />
       <div className="flex-1">
         <p className="font-semibold text-neutral-900 mb-1">Backend Not Connected</p>
-        <p className="text-sm text-neutral-700">
-          Some features require a backend server. To enable full functionality, set up your backend and configure the <code className="bg-white px-1.5 py-0.5 rounded text-xs">NEXT_PUBLIC_API_URL</code> environment variable.
+        <p className="text-sm text-neutral-700 leading-relaxed">
+          Some features require a backend server. To enable full functionality, set up your backend and configure the <code className="bg-white/80 px-1.5 py-0.5 rounded text-xs font-mono">NEXT_PUBLIC_API_URL</code> environment variable.
         </p>
       </div>
     </div>

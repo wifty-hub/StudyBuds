@@ -100,8 +100,16 @@ export default function DocumentUpload({ onSuccess }: DocumentUploadProps) {
         </div>
 
         {uploadStatus && !uploading && (
-          <div className="mt-6 p-4 bg-accent-50 border-2 border-accent-200 rounded-xl text-neutral-800 flex items-center space-x-3">
-            <div className="w-2 h-2 bg-accent rounded-full animate-pulse"></div>
+          <div className={`mt-6 p-4 rounded-xl flex items-center space-x-3 animate-fade-in ${
+            uploadStatus.includes('Successfully') || uploadStatus.includes('Processing')
+              ? 'success-message'
+              : 'error-message'
+          }`}>
+            <div className={`w-2 h-2 rounded-full animate-pulse ${
+              uploadStatus.includes('Successfully') || uploadStatus.includes('Processing')
+                ? 'bg-green-500'
+                : 'bg-red-500'
+            }`}></div>
             <p className="font-medium">{uploadStatus}</p>
           </div>
         )}
