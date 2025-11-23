@@ -52,7 +52,7 @@ export default function IntroPage({ onGetStarted }: IntroPageProps) {
   ]
 
   return (
-    <div className="min-h-screen flex flex-col relative overflow-hidden">
+    <div className="min-h-screen flex flex-col relative overflow-x-hidden w-full">
       {/* Animated Background */}
       <div className="absolute inset-0 bg-gradient-to-br from-primary-50 via-background via-60% to-primary-100">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(89,102,255,0.1),transparent_50%)]"></div>
