@@ -106,7 +106,21 @@ export interface StudyTopic {
 
 // Helper function to check backend availability
 export const checkBackendAvailable = async (): Promise<boolean> => {
+  // For localhost, always allow (backend might not be running yet)
+  if (typeof window !== 'undefined' && window.location.hostname === 'localhost') {
+    // Try to check if backend is available, but don't fail if it's not
+    try {
+      const response = await axios.get(`${API_URL}/`, { timeout: 2000 })
+      return response.status === 200
+    } catch {
+      // Backend not running, but that's okay for localhost
+      return false
+    }
+  }
+  
+  // For production, check if API URL is configured
   if (!isValidApiUrl) return false
+  
   try {
     const response = await axios.get(`${API_URL}/`, { timeout: 5000 })
     return response.status === 200
