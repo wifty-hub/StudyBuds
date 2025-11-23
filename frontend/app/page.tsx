@@ -167,6 +167,11 @@ export default function Home() {
           </div>
         </div>
       </div>
+
+      {/* Footer - Minimal */}
+      <footer className="text-center py-8 text-neutral-400 text-sm border-t border-neutral-100 bg-white">
+        <p>Powered by Google Gemini AI • Built with Next.js & FastAPI</p>
+      </footer>
     </div>
   )
 }
