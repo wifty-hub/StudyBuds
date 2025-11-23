@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import { Calendar, Clock, BookOpen, Loader2, Sparkles } from 'lucide-react'
 import { generateStudyPlan, getStudyPlans, getDocuments, StudyPlan, Document } from '@/lib/api'
 
-export default function StudyPlanComponent() {
+export default function StudyPlan() {
   const [studyPlans, setStudyPlans] = useState<StudyPlan[]>([])
   const [documents, setDocuments] = useState<Document[]>([])
   const [selectedDocs, setSelectedDocs] = useState<string[]>([])
