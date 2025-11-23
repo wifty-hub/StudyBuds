@@ -2,16 +2,13 @@
 
 import { useState, useEffect } from 'react'
 import IntroPage from '@/components/IntroPage'
-import Navigation from '@/components/Navigation'
 import { getIntroDismissed, setIntroDismissed } from '@/lib/storage'
-import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import Lumio from '@/components/Lumio'
-import { BookOpen, Sparkles, MessageSquare, Calendar, FileText, ArrowRight, Check, Zap, Target, Brain } from 'lucide-react'
+import { BookOpen, Sparkles, MessageSquare, Calendar, FileText, ArrowRight, Zap, Target, Brain } from 'lucide-react'
 
 export default function Home() {
   const [showIntro, setShowIntro] = useState(true)
-  const router = useRouter()
 
   useEffect(() => {
     const savedIntroDismissed = getIntroDismissed()

@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Lumio from './Lumio'
-import { ArrowRight, Sparkles, FileText, MessageSquare, BookOpen, Calendar, Check, Zap, Brain, Target, TrendingUp } from 'lucide-react'
+import { ArrowRight, Sparkles, FileText, MessageSquare, BookOpen, Calendar } from 'lucide-react'
 
 interface IntroPageProps {
   onGetStarted: () => void

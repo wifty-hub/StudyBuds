@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
-import { Send, Loader2, MessageSquare, Bot, User } from 'lucide-react'
+import { Send, Loader2, Bot, User, MessageSquare } from 'lucide-react'
 import { sendChatMessage, getChatHistory, ChatMessage } from '@/lib/api'
 import BackendStatus from './BackendStatus'
 
