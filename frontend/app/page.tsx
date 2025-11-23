@@ -25,7 +25,7 @@ export default function Home() {
 
   const setActiveTab = (tab: 'upload' | 'materials' | 'chat' | 'plan') => {
     setActiveTabState(tab)
-    saveActiveTab(tab) // Save to storage
+    saveActiveTab(tab)
   }
 
   const handleUploadSuccess = () => {
@@ -43,75 +43,59 @@ export default function Home() {
     return <IntroPage onGetStarted={handleGetStarted} />
   }
 
+  const navItems = [
+    { id: 'upload', icon: FileText, label: 'Upload' },
+    { id: 'materials', icon: BookOpen, label: 'Materials' },
+    { id: 'chat', icon: MessageSquare, label: 'Chat' },
+    { id: 'plan', icon: Calendar, label: 'Plan' },
+  ] as const
+
   return (
-    <div className="min-h-screen">
-      <header className="bg-[#F1F1F6] shadow-md border-b-2 border-primary-200 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-3">
-              <Lumio size={40} animated variant="image" />
+    <div className="min-h-screen flex flex-col">
+      {/* Modern Header */}
+      <header className="glass sticky top-0 z-50 border-b border-primary-100/50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-20">
+            {/* Logo */}
+            <div className="flex items-center space-x-4">
+              <div className="relative">
+                <Lumio size={48} animated variant="image" />
+                <div className="absolute -top-1 -right-1 w-3 h-3 bg-accent rounded-full animate-pulse"></div>
+              </div>
               <div>
-                <h1 className="text-2xl font-bold text-primary">StudyBudds</h1>
-                <p className="text-xs text-neutral-400">Powered by Lumio</p>
+                <h1 className="text-2xl font-bold gradient-text">StudyBudds</h1>
+                <p className="text-xs text-neutral-500">Your AI Study Companion</p>
               </div>
             </div>
-            <nav className="flex space-x-1">
-              <button
-                onClick={() => setActiveTab('upload')}
-                className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-all ${
-                  activeTab === 'upload'
-                    ? 'bg-primary text-white shadow-md'
-                    : 'text-neutral-600 hover:bg-primary-50 hover:text-primary'
-                }`}
-              >
-                <FileText className="h-5 w-5" />
-                <span>Upload</span>
-              </button>
-              <button
-                onClick={() => setActiveTab('materials')}
-                className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-all ${
-                  activeTab === 'materials'
-                    ? 'bg-primary text-white shadow-md'
-                    : 'text-neutral-600 hover:bg-primary-50 hover:text-primary'
-                }`}
-              >
-                <BookOpen className="h-5 w-5" />
-                <span>Materials</span>
-              </button>
-              <button
-                onClick={() => setActiveTab('chat')}
-                className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-all ${
-                  activeTab === 'chat'
-                    ? 'bg-primary text-white shadow-md'
-                    : 'text-neutral-600 hover:bg-primary-50 hover:text-primary'
-                }`}
-              >
-                <MessageSquare className="h-5 w-5" />
-                <span>Chat</span>
-              </button>
-              <button
-                onClick={() => setActiveTab('plan')}
-                className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-all ${
-                  activeTab === 'plan'
-                    ? 'bg-primary text-white shadow-md'
-                    : 'text-neutral-600 hover:bg-primary-50 hover:text-primary'
-                }`}
-              >
-                <Calendar className="h-5 w-5" />
-                <span>Study Plan</span>
-              </button>
+
+            {/* Navigation */}
+            <nav className="flex items-center space-x-2 bg-white/50 backdrop-blur-sm rounded-2xl p-1.5 border border-primary-100/50">
+              {navItems.map(({ id, icon: Icon, label }) => (
+                <button
+                  key={id}
+                  onClick={() => setActiveTab(id)}
+                  className={`nav-item ${
+                    activeTab === id ? 'nav-item-active' : 'nav-item-inactive'
+                  }`}
+                >
+                  <Icon className="h-5 w-5" />
+                  <span className="hidden sm:inline">{label}</span>
+                </button>
+              ))}
             </nav>
           </div>
         </div>
       </header>
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {activeTab === 'upload' && <DocumentUpload onSuccess={handleUploadSuccess} />}
-        {activeTab === 'materials' && <StudyMaterials key={refreshKey} />}
-        {activeTab === 'chat' && <StudyChat />}
-        {activeTab === 'plan' && <StudyPlan />}
+      {/* Main Content */}
+      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="animate-in fade-in duration-500">
+          {activeTab === 'upload' && <DocumentUpload onSuccess={handleUploadSuccess} />}
+          {activeTab === 'materials' && <StudyMaterials key={refreshKey} />}
+          {activeTab === 'chat' && <StudyChat />}
+          {activeTab === 'plan' && <StudyPlan />}
+        </div>
       </main>
     </div>
   )
 }
-
