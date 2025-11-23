@@ -8,10 +8,6 @@
     --foreground: 240 15% 20%; /* Warm Gray dark */
   }
 
-  * {
-    @apply border-border;
-  }
-
   body {
     @apply bg-background text-foreground;
     background-color: #FAFAFF;
