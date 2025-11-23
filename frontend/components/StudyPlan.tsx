@@ -3,11 +3,11 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { Calendar, Clock, BookOpen, Loader2, Sparkles } from 'lucide-react'
-import { generateStudyPlan, getStudyPlans, getDocuments, StudyPlan, Document } from '@/lib/api'
+import { generateStudyPlan, getStudyPlans, getDocuments, StudyPlan as StudyPlanType, Document } from '@/lib/api'
 import BackendStatus from './BackendStatus'
 
 export default function StudyPlan() {
-  const [studyPlans, setStudyPlans] = useState<StudyPlan[]>([])
+  const [studyPlans, setStudyPlans] = useState<StudyPlanType[]>([])
   const [documents, setDocuments] = useState<Document[]>([])
   const [selectedDocs, setSelectedDocs] = useState<string[]>([])
   const [generating, setGenerating] = useState(false)
