@@ -8,7 +8,7 @@ import StudyPlan from '@/components/StudyPlan'
 import IntroPage from '@/components/IntroPage'
 import Lumio from '@/components/Lumio'
 import { BookOpen, MessageSquare, FileText, Calendar } from 'lucide-react'
-import { getIntroDismissed, setIntroDismissed, getActiveTab, setActiveTab } from '@/lib/storage'
+import { getIntroDismissed, setIntroDismissed, getActiveTab, setActiveTab as saveActiveTab } from '@/lib/storage'
 
 export default function Home() {
   const [showIntro, setShowIntro] = useState(true)
