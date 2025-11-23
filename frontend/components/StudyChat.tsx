@@ -78,7 +78,7 @@ export default function StudyChat() {
     <div className="card max-w-4xl mx-auto h-[calc(100vh-200px)] flex flex-col">
       <div className="flex items-center space-x-2 mb-6 pb-4 border-b">
         <MessageSquare className="h-6 w-6 text-primary" />
-        <h2 className="text-2xl font-bold text-neutral-900">AI Study Chat</h2>
+        <h2 className="text-2xl font-bold text-neutral-900">StudyBudds Chat</h2>
       </div>
 
       <div className="flex-1 overflow-y-auto space-y-4 mb-4">
@@ -103,7 +103,7 @@ export default function StudyChat() {
               >
                 <p className="whitespace-pre-wrap">{message.content}</p>
                 {message.citations && message.citations.length > 0 && (
-                  <div className="mt-2 pt-2 border-t border-neutral-300">
+                  <div className="mt-2 pt-2 border-t border-gray-300">
                     <p className="text-xs font-medium mb-1">Sources:</p>
                     <ul className="text-xs space-y-1">
                       {message.citations.map((citation, idx) => (

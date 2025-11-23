@@ -1,4 +1,4 @@
-# 🎨 AI Study Assistant Branding Guide
+# 🎨 StudyBudds Branding Guide
 
 ## 🐦 Mascot: Lumio the Owl
 

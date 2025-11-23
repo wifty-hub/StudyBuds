@@ -1,4 +1,4 @@
-# AI Study Assistant - Project Summary
+# StudyBudds - Project Summary
 
 ## ✅ Completed Features
 

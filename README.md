@@ -1,4 +1,4 @@
-# AI Study Assistant
+# StudyBudds
 
 A full-stack, multimodal learning platform powered by Google Gemini and a modern microservices architecture. Automatically generates high-quality summaries, flashcards, quizzes, and personalized study plans from uploaded study materials.
 

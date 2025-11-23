@@ -3,7 +3,7 @@ import './globals.css'
 import React from 'react'
 
 export const metadata: Metadata = {
-  title: 'AI Study Assistant',
+  title: 'StudyBudds',
   description: 'Multimodal learning platform powered by Google Gemini',
 }
 

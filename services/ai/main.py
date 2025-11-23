@@ -269,7 +269,7 @@ async def chat(request: ChatRequest):
     full_context = "\n\n".join(doc_texts[:2])  # Limit to 2 documents
     
     prompt = f"""
-    You are an AI study assistant. Answer the student's question based on the provided study materials.
+    You are StudyBudds, an AI study assistant. Answer the student's question based on the provided study materials.
     Be accurate, helpful, and cite specific information when possible.
     
     Student's question: {request.message}

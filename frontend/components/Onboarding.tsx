@@ -13,7 +13,7 @@ export default function Onboarding({ onComplete }: OnboardingProps) {
 
   const steps = [
     {
-      title: 'Welcome to AI Study Assistant!',
+      title: 'Welcome to StudyBudds!',
       description: 'Meet Lumio, your intelligent study companion. Lumio helps you learn smarter, not harder.',
       icon: <Lumio size={120} animated variant="with-book" />,
     },

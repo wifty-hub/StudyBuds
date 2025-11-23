@@ -1,6 +1,6 @@
 # 🌐 Deployment Guide
 
-This guide covers deploying the AI Study Assistant to production. The application consists of multiple services that need to be deployed separately.
+This guide covers deploying StudyBudds to production. The application consists of multiple services that need to be deployed separately.
 
 ## 📋 Deployment Overview
 

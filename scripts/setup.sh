@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "Setting up AI Study Assistant..."
+echo "Setting up StudyBudds..."
 
 # Create necessary directories
 mkdir -p uploads

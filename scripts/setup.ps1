@@ -1,6 +1,6 @@
 # PowerShell setup script for Windows
 
-Write-Host "Setting up AI Study Assistant..." -ForegroundColor Green
+Write-Host "Setting up StudyBudds..." -ForegroundColor Green
 
 # Create necessary directories
 New-Item -ItemType Directory -Force -Path uploads | Out-Null

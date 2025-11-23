@@ -11,7 +11,7 @@ import uuid
 
 load_dotenv()
 
-app = FastAPI(title="AI Study Assistant API", version="1.0.0")
+app = FastAPI(title="StudyBudds API", version="1.0.0")
 
 # CORS configuration
 app.add_middleware(
@@ -70,7 +70,7 @@ class StudyPlanRequest(BaseModel):
 
 @app.get("/")
 async def root():
-    return {"message": "AI Study Assistant API", "version": "1.0.0"}
+    return {"message": "StudyBudds API", "version": "1.0.0"}
 
 
 @app.post("/documents/upload", response_model=DocumentResponse)
