@@ -139,24 +139,16 @@ Once running, visit:
 
 ## 🌐 Deployment
 
-**Recommended: Render Blueprint**
+**Render Manual Deployment (No Credit Card):**
+- Render's **Blueprint** feature requires a credit card, but you can deploy services **manually** without one!
+- See [FREE_DEPLOY.md](./FREE_DEPLOY.md) for step-by-step instructions
 
-1. Go to [Render Dashboard](https://dashboard.render.com)
-2. Click "New +" → "Blueprint"
-3. Connect your GitHub repository
-4. Render will detect `render.yaml` automatically
-5. Configure environment variables:
-   - `GEMINI_API_KEY`: Your Gemini API key
-   - `DOCUMENT_SERVICE_URL`: URL of document service (set after deployment)
-   - `AI_SERVICE_URL`: URL of AI service (set after deployment)
-   - `CORS_ORIGINS`: Your frontend URL
-   - `NEXT_PUBLIC_API_URL`: Your backend gateway URL
+**Alternative Free Options:**
+- **Railway + Vercel**: No credit card required
+- **Fly.io**: Free tier, no credit card
+- **Local Development**: Run with `.\scripts\start-backend.ps1`
 
-**Deployment Order:**
-1. Document Service → Deploy first
-2. AI Service → Set `GEMINI_API_KEY`
-3. Backend Gateway → Set service URLs and API key
-4. Frontend → Set `NEXT_PUBLIC_API_URL`
+**📖 Full Guide**: See [FREE_DEPLOY.md](./FREE_DEPLOY.md) for all options
 
 ## 🎨 Branding
 

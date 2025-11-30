@@ -1,0 +1,5 @@
+# Ignore Dockerfiles to prevent Render from using Docker mode
+# Use render.yaml Blueprint instead
+**/Dockerfile
+**/docker-compose.yml
+
