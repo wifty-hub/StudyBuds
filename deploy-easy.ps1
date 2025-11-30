@@ -49,3 +49,5 @@ Write-Host "4. Set environment variables (see DEPLOYMENT.md)" -ForegroundColor Y
 Write-Host ""
 Write-Host "Need detailed instructions? See EASY_DEPLOY.md" -ForegroundColor Cyan
 
+
+

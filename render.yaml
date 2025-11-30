@@ -1,8 +1,9 @@
 services:
   # Backend Gateway
   - type: web
-    name: ai-study-backend
+    name: studybudds-backend
     env: python
+    rootDir: backend
     buildCommand: pip install -r requirements.txt
     startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
     envVars:
@@ -15,32 +16,35 @@ services:
       - key: CORS_ORIGINS
         sync: false
 
-  # Document Service
+  # Document Service (OCR optional - will work without it)
   - type: web
-    name: ai-study-document
+    name: studybudds-document
     env: python
+    rootDir: services/document
     buildCommand: pip install -r requirements.txt
     startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
-    rootDir: services/document
 
   # AI Service
   - type: web
-    name: ai-study-ai
+    name: studybudds-ai
     env: python
+    rootDir: services/ai
     buildCommand: pip install -r requirements.txt
     startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
-    rootDir: services/ai
     envVars:
       - key: GEMINI_API_KEY
         sync: false
 
   # Frontend
   - type: web
-    name: ai-study-frontend
+    name: studybudds-frontend
     env: node
-    buildCommand: cd frontend && npm install && npm run build
-    startCommand: cd frontend && npm start
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    startCommand: npm start
     envVars:
       - key: NEXT_PUBLIC_API_URL
         sync: false
+
+
 

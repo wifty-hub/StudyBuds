@@ -139,19 +139,28 @@ Once running, visit:
 
 ## 🌐 Deployment
 
-**Want to deploy? Start here:** [EASY_DEPLOY.md](./EASY_DEPLOY.md) ⚡
+**Recommended: Render Blueprint**
 
-**Recommended Options:**
-- **Frontend**: [Netlify](NETLIFY_DEPLOY.md) (easiest) or Vercel (2 minutes, free)
-- **Backend**: Deploy to Render or Railway (10 minutes, free tier)
+1. Go to [Render Dashboard](https://dashboard.render.com)
+2. Click "New +" → "Blueprint"
+3. Connect your GitHub repository
+4. Render will detect `render.yaml` automatically
+5. Configure environment variables:
+   - `GEMINI_API_KEY`: Your Gemini API key
+   - `DOCUMENT_SERVICE_URL`: URL of document service (set after deployment)
+   - `AI_SERVICE_URL`: URL of AI service (set after deployment)
+   - `CORS_ORIGINS`: Your frontend URL
+   - `NEXT_PUBLIC_API_URL`: Your backend gateway URL
 
-**Quick Links:**
-- [Netlify Deployment Guide](./NETLIFY_DEPLOY.md) 🚀
-- [Full Deployment Guide](./DEPLOYMENT.md) - All options and details
+**Deployment Order:**
+1. Document Service → Deploy first
+2. AI Service → Set `GEMINI_API_KEY`
+3. Backend Gateway → Set service URLs and API key
+4. Frontend → Set `NEXT_PUBLIC_API_URL`
 
 ## 🎨 Branding
 
-This project features **Lumio the Owl** as its mascot and uses the **Scholarly Calm** color palette. See [BRANDING.md](./BRANDING.md) for complete branding guidelines.
+This project features **Lumio the Owl** as its mascot and uses the **Scholarly Calm** color palette.
 
 - **Mascot**: Lumio the Owl (friendly, scholarly owl with lightbulb plume)
 - **Primary Color**: Soft Indigo (#5966FF)

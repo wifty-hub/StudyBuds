@@ -45,25 +45,28 @@ def extract_text_from_pdf(file_content: bytes, filename: str) -> tuple[str, int]
             if text.strip():
                 text_content.append(text)
         
-        # If no text found, try OCR
+        # If no text found, try OCR (if available)
         if not text_content:
-            # Save temporarily for OCR
-            temp_path = f"/tmp/{uuid.uuid4()}.pdf"
-            with open(temp_path, "wb") as f:
-                f.write(file_content)
-            
             try:
-                images = convert_from_path(temp_path)
-                ocr_text = []
-                for image in images:
-                    text = pytesseract.image_to_string(image)
-                    ocr_text.append(text)
-                text_content = ocr_text
+                # Save temporarily for OCR
+                temp_path = f"/tmp/{uuid.uuid4()}.pdf"
+                with open(temp_path, "wb") as f:
+                    f.write(file_content)
+                
+                try:
+                    images = convert_from_path(temp_path)
+                    ocr_text = []
+                    for image in images:
+                        text = pytesseract.image_to_string(image)
+                        ocr_text.append(text)
+                    text_content = ocr_text
+                except Exception as e:
+                    print(f"OCR failed (may not be available): {e}")
+                finally:
+                    if os.path.exists(temp_path):
+                        os.remove(temp_path)
             except Exception as e:
-                print(f"OCR failed: {e}")
-            finally:
-                if os.path.exists(temp_path):
-                    os.remove(temp_path)
+                print(f"OCR not available: {e}")
         
         return "\n\n".join(text_content), page_count
     except Exception as e:
@@ -90,10 +93,20 @@ def extract_text_from_image(file_content: bytes) -> str:
     """Extract text from image using OCR"""
     try:
         image = Image.open(io.BytesIO(file_content))
-        text = pytesseract.image_to_string(image)
-        return text
+        try:
+            text = pytesseract.image_to_string(image)
+            return text
+        except Exception as e:
+            # OCR not available, return empty string
+            print(f"OCR not available for image: {e}")
+            raise HTTPException(
+                status_code=501, 
+                detail="OCR functionality is not available. Please use text-based documents or ensure OCR dependencies are installed."
+            )
+    except HTTPException:
+        raise
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Image OCR error: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Image processing error: {str(e)}")
 
 
 @app.post("/process", response_model=ProcessResponse)
