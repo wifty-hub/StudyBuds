@@ -1,3 +1,7 @@
+# Render Blueprint Configuration
+# This file defines all services for StudyBudds
+# Use Blueprint mode on Render, NOT Docker mode
+
 services:
   # Backend Gateway
   - type: web

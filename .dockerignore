@@ -1,5 +1,8 @@
-# Ignore Dockerfiles to prevent Render from using Docker mode
-# Use render.yaml Blueprint instead
+# Ignore all Dockerfiles - use render.yaml Blueprint instead
 **/Dockerfile
 **/docker-compose.yml
+backend/Dockerfile
+services/document/Dockerfile
+services/ai/Dockerfile
+frontend/Dockerfile
 
