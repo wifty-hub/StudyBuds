@@ -139,16 +139,20 @@ Once running, visit:
 
 ## 🌐 Deployment
 
-**Render Manual Deployment (No Credit Card):**
-- Render's **Blueprint** feature requires a credit card, but you can deploy services **manually** without one!
-- See [FREE_DEPLOY.md](./FREE_DEPLOY.md) for step-by-step instructions
+**🚂 Recommended: Railway (Frontend + Backend)**
+- **One platform for everything** - Frontend and Backend!
+- Free tier: $5/month credit, **no credit card required**
+- Easy setup, automatic deployments
+- See [RAILWAY_SETUP.md](./RAILWAY_SETUP.md) for step-by-step guide
 
-**Alternative Free Options:**
-- **Railway + Vercel**: No credit card required
+**Alternative Options:**
+- **Render**: Manual deployment (no credit card for individual services)
 - **Fly.io**: Free tier, no credit card
 - **Local Development**: Run with `.\scripts\start-backend.ps1`
 
-**📖 Full Guide**: See [FREE_DEPLOY.md](./FREE_DEPLOY.md) for all options
+**📖 Guides**: 
+- [RAILWAY_SETUP.md](./RAILWAY_SETUP.md) - Railway (recommended)
+- [FREE_DEPLOY.md](./FREE_DEPLOY.md) - All options
 
 ## 🎨 Branding
 

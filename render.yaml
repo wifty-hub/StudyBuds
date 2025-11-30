@@ -1,12 +1,11 @@
-# Render Blueprint Configuration
-# This file defines all services for StudyBudds
-# Use Blueprint mode on Render, NOT Docker mode
+# Render Blueprint Configuration - NO DOCKER
+# This project uses native Python/Node environments, NOT Docker
 
 services:
   # Backend Gateway
   - type: web
     name: studybudds-backend
-    env: python
+    runtime: python
     rootDir: backend
     buildCommand: pip install -r requirements.txt
     startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
@@ -24,7 +23,7 @@ services:
   # Document Service
   - type: web
     name: studybudds-document
-    env: python
+    runtime: python
     rootDir: services/document
     buildCommand: pip install -r requirements.txt
     startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
@@ -33,7 +32,7 @@ services:
   # AI Service
   - type: web
     name: studybudds-ai
-    env: python
+    runtime: python
     rootDir: services/ai
     buildCommand: pip install -r requirements.txt
     startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
@@ -45,7 +44,7 @@ services:
   # Frontend
   - type: web
     name: studybudds-frontend
-    env: node
+    runtime: node
     rootDir: frontend
     buildCommand: npm install && npm run build
     startCommand: npm start
